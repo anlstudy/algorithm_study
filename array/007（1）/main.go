@@ -1,5 +1,6 @@
 package main
 
+import "fmt"
 
 //第1题：两数之和
 //给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
@@ -12,9 +13,22 @@ package main
 //所以返回 [0, 1]
 
 func twoSum(nums []int, target int) []int {
-
+	pairMap := make(map[int]int,len(nums))
+	for i,v:=range nums {
+		//fmt.Println(i,v)
+		if value,ok:= pairMap[v];ok{
+			//fmt.Println(value)
+			//fmt.Println(value)
+			return []int{value,i}
+		}else {
+			pairMap[target-v] = i
+			//fmt.Println(pairMap)
+		}
+	}
+	return []int{}
 }
 
 func main(){
+	fmt.Println(twoSum([]int{2,7,9,11},9))
 
 }
