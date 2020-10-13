@@ -1,5 +1,9 @@
 package main
 
+import (
+	"fmt"
+	"sort"
+)
 
 //该题为 二数之和 的进阶版本，当然还有一个进阶版本为 四数之和。我们将会一一进行分析！
 //
@@ -15,6 +19,40 @@ package main
 //[-1, -1, 2]
 //]
 
-func main(){
+func threeSum(nums []int) [][]int {
+	fmt.Println(nums)
+	n := len(nums)
+	sort.Ints(nums)
+	ans := make([][]int, 0)
 
+	for index:=0;index<n;index++{
+		if index > 0 && nums[index] == nums[index-1]{
+			continue
+		}
+		end:=n-1
+		target:= -1 * nums[index]
+		for start:=index+1;start<n;start++{
+			if start > index+1 && nums[start] == nums[start-1]{
+				continue
+			}
+
+			for start<end && nums[start]+nums[end] > target {
+				end --
+			}
+
+			if start == end {
+				break
+			}
+
+			if nums[start] + nums[end] == target {
+				ans = append(ans,[]int{nums[index],nums[start],nums[end]})
+			}
+		}
+	}
+	return ans
+}
+
+
+func main(){
+	fmt.Println(threeSum([]int{-1, 0, 1, 2, -1, -4}))
 }
