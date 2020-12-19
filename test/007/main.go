@@ -20,10 +20,20 @@ package main
 //总利润: ((8 - 1) - 2) + ((9 - 4) - 2) = 8.
 
 func maxProfit(prices []int, fee int) int {
-	if len(prices)==0 {
-		return 0
+	n := len(prices)
+	dp := make([][2]int, n)
+	dp[0][0] = 0  //表示第 i 天交易完后手里没有股票的最大利润
+	dp[0][1] = -prices[0] //表示第 i 天交易完后手里持有一支股票的最大利润
+	for i := 1; i < n; i++ {
+		dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i]-fee) // 今天卖掉股票的利润和前一天没有股票最大值进行比较
+		dp[i][1] = max(dp[i-1][1], dp[i-1][0]-prices[i]) // 昨天买完股票的利润和昨天没有股票今天买了股票进行对比
 	}
-	for i:=0;i<len(prices);i++ {
+	return dp[n-1][0]
+}
 
+func max(a, b int) int {
+	if a > b {
+		return a
 	}
+	return b
 }
